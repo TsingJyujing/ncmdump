@@ -34,9 +34,6 @@ public:
 class NeteaseCrypt {
 
 private:
-	static const unsigned char sCoreKey[17];
-	static const unsigned char sModifyKey[17];
-	static const unsigned char mPng[8];
 	enum NcmFormat { MP3, FLAC };
 
 private:
@@ -50,17 +47,16 @@ private:
 
 private:
 	bool isNcmFile();
-	bool openFile(std::string const&);
 	int read(char *s, std::streamsize n);
-	void buildKeyBox(unsigned char *key, int keyLen);
-	std::string mimeType(std::string& data);
+	void buildKeyBox(const unsigned char *key, unsigned int keyLen);
+	static std::string AlbumMIMEType(std::string& data);
+
+//public:
+//	const std::string& filepath() const { return mFilepath; }
+//	const std::string& dumpFilepath() const { return mDumpFilepath; }
 
 public:
-	const std::string& filepath() const { return mFilepath; }
-	const std::string& dumpFilepath() const { return mDumpFilepath; }
-
-public:
-	NeteaseCrypt(std::string const&);
+	explicit NeteaseCrypt(std::string const&);
 	~NeteaseCrypt();
 
 public:

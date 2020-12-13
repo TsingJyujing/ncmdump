@@ -1,28 +1,60 @@
-Netease Cloud Music Copyright Protection File Dump
-===========
-
-## 重要通知!!!
-尽量不要升级网易云，新版本貌似不会写入封面数据和音乐信息至ncm文件了。
+# 网易云NCM文件转换器
 
 ## 简介
-因为最近买了个WALKMAN 发现网易云音乐有的音乐下载的文件是ncm受保护的文件 没法放到里面听 所以这个工具诞生了 用于将ncm格式转回原有的格式. 自动设置封面以及标题作者专辑等信息. 请勿传播扩散送给有缘人. 
 
-代码用C++重写了 兼容了更复杂奇怪的结构 去除了 `openssl` 依赖库 本人不会C++多多包涵
+本项目基于 [anonymous5l/ncmdump](https://github.com/anonymous5l/ncmdump) 修改而来。
+本来想小修一下提个PR，但是作者似乎不太合并PR，所以就大刀阔斧随便改了。
 
-## 便捷式传送门
+主要的改动是：
 
-Windows GUI版本 [ncmdump-gui](https://github.com/anonymous5l/ncmdump-gui)
+- 文件写入到与源文件相同的文件夹
+- 支持扫描文件夹，生成所有的文件
+- 顺手优化代码
+    - 统一格式
+    - 去除不使用的函数
+    - 用了一些C++17的新特性
 
-Windows GUI应用程序 [ncmdump-gui-release](https://github.com/anonymous5l/ncmdump-gui/releases/tag/fully) 运行库基于 `.NetFramework 4.6.1` 
+## 使用文档
 
-Android版本 [DroidNCM](https://github.com/bunnyblueair/DroidNCM)
+对于单个文件，直接`ncmdump file <文件名>`即可，如果需要遍历文件夹，那就`ncmdump scan <文件夹>`
 
-## 依赖库
-	* taglib
+其余参数：
 
-## 使用
-	ncmdump [files]...
+- `--verbose`: 决定日志等级，如果开启则为DEBUG级别
+- `--rm`: 如果转换成功就删除原文件
+- `--skip`: 跳过转换后文件已存在的任务
 
-## 微信捐赠
+手册：
 
-![wechat-pay](https://raw.githubusercontent.com/anonymous5l/static-resoures/master/wechat-pay.png?raw=true)
+```
+Usage: ncmdump [options] command path 
+
+Positional arguments:
+command         The command you'd like to run: [file|scan]
+path            Path of the file/dir
+
+Optional arguments:
+-h --help       shows help message and exits
+-v --version    prints version information and exits
+--rm            Remove NCM file if it's successfully dumped.
+--skip          Skip writing if converted file already existed.
+--verbose       Print detail logs
+```
+
+## 参考资料
+
+感谢所有的开源作者，让我的工作进行的非常容易。
+
+- 原始项目地址：[Netease Cloud Music Copyright Protection File Dump](https://github.com/anonymous5l/ncmdump)
+- 日志记录使用了 [gabime/spdlog](https://github.com/gabime/spdlog)
+- 在解析参数的时候使用了 [p-ranav/argparse](https://github.com/p-ranav/argparse)
+- 具体的原理拜读了 [网易云音乐ncm格式分析以及ncm与mp3格式转换](https://www.cnblogs.com/cyx-b/p/13443003.html) [archive](https://archive.vn/HTe43)
+
+## 相关项目地址  
+
+
+- Windows GUI版本 [ncmdump-gui](https://github.com/anonymous5l/ncmdump-gui)
+- Windows GUI应用程序 [ncmdump-gui-release](https://github.com/anonymous5l/ncmdump-gui/releases/tag/fully) 
+    - 运行库基于 `.NetFramework 4.6.1`
+- Android版本 [DroidNCM](https://github.com/bunnyblueair/DroidNCM)
+
